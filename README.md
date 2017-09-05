@@ -54,36 +54,35 @@ What it sets up
 
 macOS tools:
 
-* [Homebrew] for managing operating system libraries.
+* [Homebrew] for managing operating system libraries
+* [X-Code] to provide libraries for the general development environment
 
 [Homebrew]: http://brew.sh/
+[X-Code]: https://developer.apple.com/xcode/
 
 Unix tools:
 
 * [Exuberant Ctags] for indexing files for vim tab completion
 * [Git] for version control
+* [iTerm2] for a better terminal
 * [OpenSSL] for Transport Layer Security (TLS)
-* [RCM] for managing company and personal dotfiles
-* [The Silver Searcher] for finding things in files
+* [Prezto] for Zsh configuration
 * [Tmux] for saving project state and switching between projects
 * [Watchman] for watching for filesystem events
+* [Wget] for http(s)/ftp file retrieval
 * [Zsh] as your shell
+* [Zsh-completions] additional completion definitions for Zsh
 
 [Exuberant Ctags]: http://ctags.sourceforge.net/
 [Git]: https://git-scm.com/
+[iTerm2]: https://www.iterm2.com/
 [OpenSSL]: https://www.openssl.org/
-[RCM]: https://github.com/thoughtbot/rcm
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
+[Prezto]: https://github.com/sorin-ionescu/prezto
 [Tmux]: http://tmux.github.io/
 [Watchman]: https://facebook.github.io/watchman/
+[Wget]: https://www.gnu.org/software/wget/
 [Zsh]: http://www.zsh.org/
-
-Heroku tools:
-
-* [Heroku CLI] and [Parity] for interacting with the Heroku API
-
-[Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli
-[Parity]: https://github.com/thoughtbot/parity
+[Zsh-completions]: https://github.com/zsh-users/zsh-completions
 
 GitHub tools:
 
@@ -95,40 +94,38 @@ Image tools:
 
 * [ImageMagick] for cropping and resizing images
 
-Testing tools:
-
-* [Qt 5] for headless JavaScript testing via [Capybara Webkit]
-
-[Qt 5]: http://qt-project.org/
-[Capybara Webkit]: https://github.com/thoughtbot/capybara-webkit
+[ImageMagick]: http://www.imagemagick.org/
 
 Programming languages, package managers, and configuration:
 
-* [Bundler] for managing Ruby libraries
+* [Ansible] for deployment automation
+* [Delve] to debug Go projects
+* [ember-cli] for managing Ember.js projects
+* [Go] for microservice project development
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
-* [Rbenv] for managing versions of Ruby
-* [Ruby Build] for installing Rubies
-* [Ruby] stable for writing general-purpose code
+* [NVM] for managing Node.js versions
+* [Python] in support of Ansible
+* [Protobuf] data interchange format for gRPC
+* [Virtualenv] to create isolated Python environments
 * [Yarn] for managing JavaScript packages
 
-[Bundler]: http://bundler.io/
-[ImageMagick]: http://www.imagemagick.org/
+[Ansible]: https://www.ansible.com/
+[Delve]: https://github.com/derekparker/delve
+[ember-cli]: https://ember-cli.com/
+[Go]: https://golang.org/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
-[Rbenv]: https://github.com/sstephenson/rbenv
-[Ruby Build]: https://github.com/sstephenson/ruby-build
-[Ruby]: https://www.ruby-lang.org/en/
+[NVM]: https://github.com/creationix/nvm
+[Protobuf]: https://github.com/google/protobuf
+[Python]: https://www.python.org/
+[Virtualenv]: https://virtualenv.pypa.io/en/stable/
 [Yarn]: https://yarnpkg.com/en/
 
-Databases:
+IDEs:
 
-* [Postgres] for storing relational data
-* [Redis] for storing key-value data
+* [VSC] for Go / Ember projects
 
-[Postgres]: http://www.postgresql.org/
-[Redis]: http://redis.io/
-
-It should take less than 15 minutes to install (depends on your machine).
+[VSC]: https://code.visualstudio.com/
 
 Customize in `~/.laptop.local`
 ------------------------------
