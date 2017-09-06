@@ -1,0 +1,136 @@
+#!/bin/sh
+
+# Utility methods
+
+append_to_zshrc() {
+  local text="$1" zshrc
+  local skip_new_line="${2:-0}"
+
+  if [ -w "$HOME/.zshrc.local" ]; then
+    zshrc="$HOME/.zshrc.local"
+  else
+    zshrc="$HOME/.zshrc"
+  fi
+
+  if ! grep -Fqs "$text" "$zshrc"; then
+    if [ "$skip_new_line" -eq 1 ]; then
+      printf "%s\n" "$text" >> "$zshrc"
+    else
+      printf "\n%s\n" "$text" >> "$zshrc"
+    fi
+  fi
+}
+
+append_to_zpreztorc_modules() {
+  local module="$1"
+  local zpreztorc="$HOME/.zpreztorc"
+
+  local modulePattern="zstyle ':prezto:load' pmodule"
+
+  local firstModuleLineNumber=$(sed -n "
+    /${modulePattern}/=
+  " "$zpreztorc")
+
+  local lastModuleLineNumber=$(sed -n "
+    /${modulePattern}/{
+      :loop;
+      n;
+      /\'prompt\'/{
+        =;
+        b exit;
+      }
+      b loop;
+      :exit;
+    }
+  " "$zpreztorc")
+
+  local modules=$(sed -n "${firstModuleLineNumber},${lastModuleLineNumber}p" "$zpreztorc")
+
+  # If the module isn't present
+  if ! echo "$modules" | grep -q "$module"; then
+    # We want to insert just prior to the 'prompt' module
+    local insertionLineNumber=$((lastModuleLineNumber - 1))
+
+    # Append the new module
+    sed -i.bak "${insertionLineNumber}a\\
+      \\ \\ '${module}' \\\\
+    " "$zpreztorc"
+  fi
+}
+
+swap_zpreztorc_theme() {
+  local defaultTheme="zstyle ':prezto:module:prompt' theme 'sorin'"
+  local theme="$1"
+  local zpreztorc="$HOME/.zpreztorc"
+
+  if cat "$zpreztorc" | grep -q "$defaultTheme"; then
+    sed -i.bak "s/zstyle ':prezto:module:prompt' theme 'sorin'/zstyle ':prezto:module:prompt' theme '${theme}'/" "$zpreztorc"
+  fi
+}
+
+update_shell() {
+  local shell_path;
+  shell_path="$(which zsh)"
+
+  fancy_echo "Changing your shell to zsh ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    fancy_echo "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+  sudo chsh -s "$shell_path" "$USER"
+}
+
+# Welcome
+
+echo "Installing shell packages..."
+
+# Setup
+
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch "$HOME/.zshrc"
+fi
+
+# Install prezto
+
+git_clone_or_pull 'https://github.com/sorin-ionescu/prezto.git' "${ZDOTDIR:-$HOME}/.zprezto"
+TMP_RC_FILE=$(mktemp -t rcfile); cat << EOF > $TMP_RC_FILE
+  setopt EXTENDED_GLOB
+  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    ln -f -s "\$rcfile" "\${ZDOTDIR:-$HOME}/.\${rcfile:t}"
+  done
+  rm -f $TMP_RC_FILE
+EOF
+
+zsh --rcs $TMP_RC_FILE
+unset TMP_RC_FILE
+
+# Add exports to the .zshrc file
+
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
+append_to_zshrc 'export GOPATH=/Users/$USER/go'
+append_to_zshrc 'export GOBIN=$GOPATH/bin'
+append_to_zshrc 'export PROTOCBIN=/Users/$USER/sb/protoc-3/bin'
+append_to_zshrc 'export COMPOSERBIN=/Users/$USER/.composer/vendor/bin'
+append_to_zshrc 'export PATH=$GOBIN:$PATH:/Users/$USER/bin:$COMPOSERBIN'
+
+# Modify the .zpreztorc file
+
+append_to_zpreztorc_modules 'git'
+append_to_zpreztorc_modules 'syntax-highlighting'
+append_to_zpreztorc_modules 'history-substring-search'
+
+# Change the prezto them
+swap_zpreztorc_theme 'paradox'
+
+# Switch the shell
+
+case "$SHELL" in
+  */zsh)
+    if [ "$(which zsh)" != '/usr/local/bin/zsh' ] ; then
+      update_shell
+    fi
+    ;;
+  *)
+    update_shell
+    ;;
+esac
