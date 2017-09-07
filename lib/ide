@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "Checking for Visual Studio Code..."
+
+if ! app_is_installed 'Visual Studio Code'; then
+  echo "VSC installation via cask is flakey, download from a browser..."
+  open https://code.visualstudio.com/Download
+fi

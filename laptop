@@ -1,0 +1,31 @@
+#!/bin/sh
+
+LAPTOP_PREFIX="$HOME/laptop"
+
+# Create the directory for laptop files if required
+if [ -d "$LAPTOP_PREFIX" ]; then
+  if ! [ -r "$LAPTOP_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" "$LAPTOP_PREFIX"
+  fi
+else
+  sudo mkdir "$LAPTOP_PREFIX"
+  sudo chflags norestricted "$LAPTOP_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$LAPTOP_PREFIX"
+fi
+
+cd "$LAPTOP_PREFIX"
+
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/git
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/homebrew
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/ide
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/server
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/shell
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/terminal
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/tools
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/unix
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/web
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/xcode
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/zsh
+
+/usr/bin/env bash mac 2>&1 | tee ~/laptop.log

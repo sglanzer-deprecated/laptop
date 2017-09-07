@@ -7,6 +7,12 @@ set -e
 
 # Utility methods
 
+app_is_installed() {
+  local app_name
+  app_name=$(echo "$1" | cut -d'-' -f1)
+  find /Applications -iname "$app_name*" -maxdepth 1 | egrep '.*' > /dev/null
+}
+
 fancy_echo() {
   local fmt="$1"; shift
   printf "\n$fmt\n" "$@"
@@ -64,17 +70,20 @@ fi
 # Source the child scripts
 [ $environment ] && prefix="lib/" || prefix=""
 
+source "${prefix}homebrew"
+source "${prefix}zsh"
 source "${prefix}shell"
+source "${prefix}terminal"
+source "${prefix}unix"
+source "${prefix}git"
+source "${prefix}ide"
+source "${prefix}xcode"
+source "${prefix}server"
+source "${prefix}web"
+source "${prefix}tools"
 
-# source "${prefix}git"
-# source "${prefix}homebrew"
-# source "${prefix}ide"
-# source "${prefix}images"
-# source "${prefix}server"
-
-# source "${prefix}terminal"
-# source "${prefix}unix"
-# source "${prefix}web"
-# source "${prefix}xcode"
-
-echo
+# Run local customizations
+if [ -f "$HOME/.laptop.local" ]; then
+  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  . "$HOME/.laptop.local"
+fi

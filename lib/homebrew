@@ -1,0 +1,35 @@
+#!/bin/sh
+
+HOMEBREW_PREFIX="/usr/local"
+
+# Create the directory for homebrew installations if required
+if [ -d "$HOMEBREW_PREFIX" ]; then
+  if ! [ -r "$HOMEBREW_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local
+  fi
+else
+  sudo mkdir "$HOMEBREW_PREFIX"
+  sudo chflags norestricted "$HOMEBREW_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+fi
+
+# Install Homebrew and set the path to include the Homebrew bin directory if necessary
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+
+    # TODO: Could separate this out to be run outside of the install
+    append_to_zshrc '# recommended by brew doctor'
+    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+
+    export PATH="/usr/local/bin:$PATH"
+fi
+
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
+
+fancy_echo "Updating Homebrew formulae ..."
+brew update --force # https://github.com/Homebrew/brew/issues/1151

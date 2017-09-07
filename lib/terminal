@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Status log
+
+echo "Installing terminal packages..."
+
+brew bundle --file=- <<EOF
+  brew "tmux"
+  brew "reattach-to-user-namespace"
+
+  cask "iterm2"
+EOF

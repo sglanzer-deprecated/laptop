@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Installing unix tool packages..."
+
+brew bundle --file=- <<EOF
+  tap "universal-ctags/universal-ctags"
+
+  brew "openssl"
+  brew "the_silver_searcher"
+  brew "universal-ctags", args: ["HEAD"]
+  brew "watchman"
+  brew "wget"
+EOF

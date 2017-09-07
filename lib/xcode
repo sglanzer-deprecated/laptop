@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Status log
+
+echo "Installing xcode..."
+
+tmp_output=$(mktemp -t tmp)
+
+# From http://stackoverflow.com/a/15371967
+while ! pkgutil --pkg-info=com.apple.pkg.CLTools_Executables > "$tmp_output" 2>&1; do
+  if [ -z "$xcode_cli_installing" ]
+  then
+    print_status "Please install XCode command line tools in the pop-up window"
+    xcode-select --install
+    print_status "Waiting for XCode command line tools"
+    xcode_cli_installing='yes'
+  else
+    sleep 1
+  fi
+done

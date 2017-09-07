@@ -82,7 +82,7 @@ update_shell() {
 
 # Welcome
 
-echo "Installing shell packages..."
+echo "Setting up ZSH and Prezto..."
 
 # Setup
 
@@ -112,6 +112,7 @@ append_to_zshrc 'export GOBIN=$GOPATH/bin'
 append_to_zshrc 'export PROTOCBIN=/Users/$USER/sb/protoc-3/bin'
 append_to_zshrc 'export COMPOSERBIN=/Users/$USER/.composer/vendor/bin'
 append_to_zshrc 'export PATH=$GOBIN:$PATH:/Users/$USER/bin:$COMPOSERBIN'
+append_to_zshrc 'export N_PREFIX=$HOME'
 
 # Modify the .zpreztorc file
 

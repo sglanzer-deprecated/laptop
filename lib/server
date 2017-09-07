@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Status log
+
+echo "Installing server development packages..."
+
+brew bundle --file=- <<EOF
+  brew 'python'
+  brew 'ansible'
+  brew "go"
+  brew 'protobuf'
+EOF
+
+if ! go list ... | grep -Fqs delve; then
+  echo "Installing Delve for Go..."
+  go get -u github.com/derekparker/delve/cmd/dlv
+fi
+
+pip2.7 install virtualenv

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Status log
+
+echo "Installing web development packages..."
+
+brew bundle --file=- <<EOF
+  brew 'n'
+  brew "yarn"
+EOF
+
+if ! app_is_installed 'Google Chrome'; then
+  brew bundle --file=- <<EOF
+    cask "google-chrome"
+EOF
+fi
+
+n stable
+
+yarn global add ember-cli@2.15
+
+npmRegistry=$(npm get registry)
+if [[ "$npmRegistry" != "https://npm.npav.accedian.net:4873/" ]]; then
+  npm set registry https://npm.npav.accedian.net:4873
+fi
+
+yarnRegistry=$(yarn config get registry)
+if [[ "$yarnRegistry" != "https://npm.npav.accedian.net:4873/" ]]; then
+  yarn config set registry https://npm.npav.accedian.net:4873
+fi

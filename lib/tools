@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Status log
+
+echo "Installing general tools..."
+
+brew bundle --file=- <<EOF
+  brew "imagemagick"
+EOF
+
+if ! app_is_installed 'Slack'; then
+  brew bundle --file=- <<EOF
+    cask "slack"
+EOF
+fi
