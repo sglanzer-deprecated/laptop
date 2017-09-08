@@ -3,6 +3,121 @@
 echo "Checking for Visual Studio Code..."
 
 if ! app_is_installed 'Visual Studio Code'; then
-  echo "VSC installation via cask is flakey, download from a browser..."
-  open https://code.visualstudio.com/Download
+  echo "Installing Visual Studio Code..."
+  brew bundle --file=- <<EOF
+    cask 'visual-studio-code'
+EOF
 fi
+
+extensions=(
+  # Server
+  'Cronos87.yaml-symbols'
+  'GrapeCity.gc-excelviewer'
+  'Kevenin.markdowninclude'
+  'KnisterPeter.vscode-github'
+  'PeterJausovec.vscode-docker'
+  'Zim.vsc-docker'
+  'adamvoss.yaml'
+  'andrefischer.vscode-multimarkdown'
+  'avli.clojure'
+  'eriklynd.json-tools'
+  'formulahendry.docker-explorer'
+  'formulahendry.docker-extension-pack'
+  'gayanhewa.referenceshelper'
+  'georgewfraser.vscode-javac'
+  'goessner.mdmath'
+  'haaaad.ansible'
+  'henriiik.docker-linter'
+  'humao.rest-client'
+  'jamesnorton.continuum'
+  'jebbs.plantuml'
+  'jkeys089.plantuml'
+  'lukehoban.Go'
+  'mohsen1.prettify-json'
+  'qhoekman.language-plantuml'
+  'richie5um2.vscode-statusbar-json-path'
+  'stiansivertsen.visualclojure'
+  'timonwong.ansible-autocomplete'
+  'wholroyd.jinja'
+  'ziyasal.vscode-open-in-github'
+
+  # Client
+  'formulahendry.auto-close-tag'
+  'formulahendry.auto-rename-tag'
+  'EditorConfig.editorconfig'
+  'felixrieseberg.vsc-ember-cli'
+  'dbaeumer.vscode-eslint'
+  'Tyriar.sort-lines'
+  'shinnn.stylelint'
+  'wayou.vscode-todo-highlight'
+)
+
+theme="GitHub"
+
+PS3='Choose your IDE theme: '
+options=("GitHub (server)" "Frost (web)")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "GitHub (server)")
+            extensions+=('gerane.Theme-Github')
+            break
+            ;;
+        "Frost (web)")
+            theme="Frost"
+            extensions+=('ciena-blueplanet.vsc-ember-frost')
+            break
+            ;;
+        *) echo invalid option;;
+    esac
+done
+
+for extension in ${extensions[@]}; do
+  code --install-extension $extension
+done
+
+# Settings
+
+VSC_SETTINGS="$HOME/Library/Application Support/Code/User/settings.json"
+
+if [ ! -f "$VSC_SETTINGS" ]; then
+  echo "{}" > "$VSC_SETTINGS"
+fi
+
+set_vsc_setting() {
+  local jqCommand=$1
+  local setting=$2
+  local value=$3
+  local currentValue=$(jq "$setting" "$VSC_SETTINGS")
+
+  if [ "$currentValue" == "null" ]; then
+    if [ "$jqCommand" == "" ]; then
+      echo "$setting += $value"
+    else
+      echo " | $setting += $value"
+    fi
+  fi
+}
+
+jqCommand=""
+if [ "$theme" == "Frost" ]; then
+  jqCommand+=$(set_vsc_setting "$jqCommand" '."workbench.colorTheme"' '"Ember Frost"')
+fi
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.autoSave"' '"onWindowChange"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."stylelint.enable"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."css.validate"' '"false"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."scss.validate"' '"false"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"' '{}')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/.git"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/.svn"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/.hg"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/CVS"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/.DS_Store"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/bower_components"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/node_modules"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/dist"' '"true"')
+jqCommand+=$(set_vsc_setting "$jqCommand" '."files.exclude"."**/tmp"' '"true"')
+
+tmpVscSettings=$(mktemp)
+jq "$jqCommand" "$VSC_SETTINGS" > "$tmpVscSettings"
+mv -f "$tmpVscSettings" "$VSC_SETTINGS"

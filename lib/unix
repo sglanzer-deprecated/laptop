@@ -5,6 +5,7 @@ echo "Installing unix tool packages..."
 brew bundle --file=- <<EOF
   tap "universal-ctags/universal-ctags"
 
+  brew "jq"
   brew "openssl"
   brew "the_silver_searcher"
   brew "universal-ctags", args: ["HEAD"]
