@@ -9,6 +9,8 @@ brew bundle --file=- <<EOF
   brew 'ansible'
   brew "go"
   brew 'protobuf'
+
+  cask "google-cloud-sdk"
 EOF
 
 if ! go list ... | grep -Fqs delve; then
