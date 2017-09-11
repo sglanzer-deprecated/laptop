@@ -87,7 +87,6 @@ unset TMP_RC_FILE
 
 # Add exports to the .zshrc file
 
-append_to_zshrc 'export PATH="/usr/local/bin:$PATH"'
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 append_to_zshrc 'export GOPATH=/Users/$USER/go'
 append_to_zshrc 'export GOBIN=$GOPATH/bin'
