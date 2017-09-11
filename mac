@@ -91,6 +91,8 @@ fi
 
 source "${prefix}xcode"
 source "${prefix}homebrew"
+source "${prefix}zsh"
+source "${prefix}shell"
 source "${prefix}terminal"
 source "${prefix}unix"
 source "${prefix}git"
