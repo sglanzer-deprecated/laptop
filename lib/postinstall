@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 if app_is_installed 'GitHub'; then
   fancy_echo "It looks like you've already configured your GitHub SSH keys."

@@ -87,7 +87,7 @@ if [ ! -d "$HOME/.bin/" ]; then
 fi
 
 # Source the child scripts
-[ $environment ] && prefix="lib/" || prefix=""
+[ $environment ] && prefix="lib/" || prefix="./"
 
 source "${prefix}homebrew"
 source "${prefix}terminal"
