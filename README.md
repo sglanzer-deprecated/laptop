@@ -115,6 +115,8 @@ Server-side development:
 
 * [Protobuf] data interchange format for gRPC
 
+* [Gcloud SDK] CLI for interacting with Google Cloud
+
 [Python]: https://www.python.org/
 [Virtualenv]: https://virtualenv.pypa.io/en/stable/
 [Ansible]: https://www.ansible.com/
@@ -123,6 +125,8 @@ Server-side development:
 [Delve]: https://github.com/derekparker/delve
 
 [Protobuf]: https://github.com/google/protobuf
+
+[Gcloud SDK]: https://cloud.google.com/sdk/gcloud/
 
 Client-side development:
 
