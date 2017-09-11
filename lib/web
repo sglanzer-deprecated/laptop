@@ -33,7 +33,6 @@ npm install -g yarn
 
 yarn global add ember-cli@2.15
 yarn global add yo
-yarn global add generator-anvil
 
 npmRegistry=$(npm get registry)
 if [[ "$npmRegistry" != "https://npm.npav.accedian.net:4873/" ]]; then
@@ -44,3 +43,5 @@ yarnRegistry=$(yarn config get registry)
 if [[ "$yarnRegistry" != "https://npm.npav.accedian.net:4873/" ]]; then
   yarn config set registry https://npm.npav.accedian.net:4873
 fi
+
+yarn global add generator-anvil
