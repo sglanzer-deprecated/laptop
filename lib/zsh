@@ -1,4 +1,4 @@
-# Welcome
+#!/bin/sh
 
 echo "Updating ZSH to the Homebrew version instead of OSX default..."
 
