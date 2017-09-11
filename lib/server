@@ -5,10 +5,10 @@
 echo "Installing server development packages..."
 
 brew bundle --file=- <<EOF
-  brew 'python'
-  brew 'ansible'
+  brew "python"
+  brew "ansible"
   brew "go"
-  brew 'protobuf'
+  brew "protobuf"
 
   cask "google-cloud-sdk"
 EOF

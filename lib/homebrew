@@ -34,8 +34,8 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 echo "Updating ZSH to the Homebrew version instead of OSX default..."
 
 brew bundle --file=- <<EOF
-  brew 'zsh'
-  brew 'zsh-completions'
+  brew "zsh"
+  brew "zsh-completions"
 EOF
 
 append_to_zpreztorc_modules() {
