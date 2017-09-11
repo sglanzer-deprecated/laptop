@@ -89,12 +89,12 @@ fi
 # Source the child scripts
 [ $environment ] && prefix="lib/" || prefix="./"
 
+source "${prefix}xcode"
 source "${prefix}homebrew"
 source "${prefix}terminal"
 source "${prefix}unix"
 source "${prefix}git"
 source "${prefix}ide"
-source "${prefix}xcode"
 source "${prefix}server"
 source "${prefix}web"
 source "${prefix}tools"

@@ -14,6 +14,19 @@ if ! app_is_installed 'Google Chrome'; then
 EOF
 fi
 
+N_DIR="/usr/local/n"
+
+# Create the directory for n installations if required
+if [ -d "$N_DIR" ]; then
+  if ! [ -r "$N_DIR" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local/n
+  fi
+else
+  sudo mkdir "$N_DIR"
+  sudo chflags norestricted "$N_DIR"
+  sudo chown -R "$LOGNAME:admin" "$N_DIR"
+fi
+
 n stable
 
 npm install -g yarn
