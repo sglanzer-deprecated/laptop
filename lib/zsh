@@ -1,8 +1,0 @@
-#!/bin/sh
-
-echo "Updating ZSH to the Homebrew version instead of OSX default..."
-
-brew bundle --file=- <<EOF
-  brew 'zsh'
-  brew 'zsh-completions'
-EOF
