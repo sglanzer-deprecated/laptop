@@ -10,9 +10,9 @@ tmp_output=$(mktemp -t tmp)
 while ! pkgutil --pkg-info=com.apple.pkg.CLTools_Executables > "$tmp_output" 2>&1; do
   if [ -z "$xcode_cli_installing" ]
   then
-    print_status "Please install XCode command line tools in the pop-up window"
+    echo "Please install XCode command line tools in the pop-up window"
     xcode-select --install
-    print_status "Waiting for XCode command line tools"
+    echo "Waiting for XCode command line tools"
     xcode_cli_installing='yes'
   else
     sleep 1
