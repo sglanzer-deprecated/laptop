@@ -7,4 +7,5 @@ brew bundle --file=- <<EOF
   brew "hub"
 
   cask "github-desktop"
+  cask "sourcetree"
 EOF
