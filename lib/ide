@@ -75,9 +75,11 @@ done
 for extension in ${extensions[@]}; do
   code --install-extension $extension
 done
+# Install our own (unpublished) extension
+curl --remote-name https://raw.githubusercontent.com/sglanzer/vsc-ember-modules/master/vsc-ember-modules-0.0.1.vsix
+code --install-extension vsc-ember-modules-0.0.1.vsix
 
 # Settings
-
 VSC_SETTINGS="$HOME/Library/Application Support/Code/User/settings.json"
 
 if [ ! -f "$VSC_SETTINGS" ]; then
