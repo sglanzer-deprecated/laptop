@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if ! [ -e "$HOME/.ssh/id_rsa.pub" ]
+then
+  echo "Generating ssh key - please use the default location and a passphrase..."
+
+  ssh-keygen -t rsa -b 4096 -C "$USER"
+
+  ssh-add -K ~/.ssh/id_rsa
+fi

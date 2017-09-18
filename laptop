@@ -22,6 +22,7 @@ curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/
 curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/postinstall
 curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/server
 curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/shell
+curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/ssh
 curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/terminal
 curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/tools
 curl --remote-name https://raw.githubusercontent.com/sglanzer/laptop/master/lib/unix

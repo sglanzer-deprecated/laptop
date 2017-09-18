@@ -97,12 +97,14 @@ Unix tools:
 Git tools:
 
 * [Git] for version control
-* [GitHub Desktop] for quickly setting up SSH keys
+* [GitHub Desktop] for working with Github repos
 * [Hub] for interacting with the GitHub API
+* [SourceTree] as an alternative to Github Desktop
 
 [Git]: https://git-scm.com/
 [GitHub Desktop]: https://desktop.github.com/
 [Hub]: http://hub.github.com/
+[SourceTree]: https://www.sourcetreeapp.com/
 
 Server-side development:
 
@@ -148,6 +150,13 @@ IDEs:
 * [VSC] for Go / Ember projects
 
 [VSC]: https://code.visualstudio.com/
+
+IDE extensions:
+
+* ...more
+* [vsc-ember-modules]: Ember module import snippets
+
+[vsc-ember-modules]: https://github.com/sglanzer/vsc-ember-modules/blob/master/README.md
 
 Image tools:
 
