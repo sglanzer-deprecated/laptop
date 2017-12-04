@@ -101,7 +101,6 @@ source "${prefix}ide"
 source "${prefix}server"
 source "${prefix}web"
 source "${prefix}tools"
-source "${prefix}postinstall"
 
 # Run local customizations
 if [ -f "$HOME/.laptop.local" ]; then
